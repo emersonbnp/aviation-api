@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.aviation"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
 java {
     toolchain {
@@ -19,8 +19,13 @@ repositories {
 }
 
 dependencies {
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
+    implementation("org.springframework.retry:spring-retry:2.0.12")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation ("com.fasterxml.jackson.core:jackson-databind")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-actuator-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
