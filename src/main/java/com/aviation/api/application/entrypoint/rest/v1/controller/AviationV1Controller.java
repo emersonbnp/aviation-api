@@ -42,27 +42,90 @@ public class AviationV1Controller {
   }
 
   @GetMapping(value = "/airport", produces = APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> getAirport(@RequestParam Map<String, Object> params) {
+  public ResponseEntity<Object> getAirport(
+      @Parameter(hidden = true) @RequestParam Map<String, Object> params,
+      @Parameter(
+              name = "ids",
+              in = QUERY,
+              description = "Station ID(s)",
+              examples = {@ExampleObject(name = "A single ICAO Id", value = "KMCI")})
+          String ids,
+      @Parameter(
+              name = "bbox",
+              in = QUERY,
+              description = "Geographic bounding box (lat0, lon0, lat1, lon1)",
+              examples = {
+                @ExampleObject(name = "A small box around Chicago", value = "40,-90,45,-85")
+              })
+          String bbox) {
     return ResponseEntity.ok(dataProvider.getAirport(params));
   }
 
   @GetMapping(value = "/navaid", produces = APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> getNavai(@RequestParam Map<String, Object> params) {
+  public ResponseEntity<Object> getNavai(
+      @Parameter(hidden = true) @RequestParam Map<String, Object> params,
+      @Parameter(
+              name = "ids",
+              in = QUERY,
+              description = "Station ID(s)",
+              examples = {@ExampleObject(name = "A single ICAO Id", value = "KMCI")})
+          String ids,
+      @Parameter(
+              name = "bbox",
+              in = QUERY,
+              description = "Geographic bounding box (lat0, lon0, lat1, lon1)",
+              examples = {
+                @ExampleObject(name = "A small box around Chicago", value = "40,-90,45,-85")
+              })
+          String bbox) {
     return ResponseEntity.ok(dataProvider.getNavaid(params));
   }
 
   @GetMapping(value = "/fix", produces = APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> getFix(@RequestParam Map<String, Object> params) {
+  public ResponseEntity<Object> getFix(
+      @Parameter(hidden = true) @RequestParam Map<String, Object> params,
+      @Parameter(
+              name = "ids",
+              in = QUERY,
+              description = "Station ID(s)",
+              examples = {@ExampleObject(name = "A single ICAO Id", value = "KMCI")})
+          String ids,
+      @Parameter(
+              name = "bbox",
+              in = QUERY,
+              description = "Geographic bounding box (lat0, lon0, lat1, lon1)",
+              examples = {
+                @ExampleObject(name = "A small box around Chicago", value = "40,-90,45,-85")
+              })
+          String bbox) {
     return ResponseEntity.ok(dataProvider.getFix(params));
   }
 
   @GetMapping(value = "/feature", produces = APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> getFeature(@RequestParam Map<String, Object> params) {
+  public ResponseEntity<Object> getFeature(
+      @Parameter(hidden = true) @RequestParam Map<String, Object> params,
+      @Parameter(
+              name = "bbox",
+              in = QUERY,
+              description = "Geographic bounding box (lat0, lon0, lat1, lon1)",
+              examples = {
+                @ExampleObject(name = "A small box around Chicago", value = "40,-90,45,-85")
+              })
+          String bbox) {
     return ResponseEntity.ok(dataProvider.getFeature(params));
   }
 
   @GetMapping(value = "/obstacle", produces = APPLICATION_JSON_VALUE)
-  public ResponseEntity<Object> getObstacle(@RequestParam Map<String, Object> params) {
+  public ResponseEntity<Object> getObstacle(
+      @Parameter(hidden = true) @RequestParam Map<String, Object> params,
+      @Parameter(
+              name = "bbox",
+              in = QUERY,
+              description = "Geographic bounding box (lat0, lon0, lat1, lon1)",
+              examples = {
+                @ExampleObject(name = "A small box around Chicago", value = "40,-90,45,-85")
+              })
+          String bbox) {
     return ResponseEntity.ok(dataProvider.getObstacle(params));
   }
 }
