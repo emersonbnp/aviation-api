@@ -1,7 +1,7 @@
 package com.aviation.api.application.entrypoint.rest.v1.controller.advice;
 
 import com.aviation.api.application.entrypoint.rest.v1.controller.exception.StatusInformationException;
-import com.aviation.api.application.entrypoint.rest.v1.controller.model.ErrorResponse;
+import com.aviation.api.application.entrypoint.rest.v1.controller.model.ErrorResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,7 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalExceptionHandler {
 
   @ExceptionHandler(StatusInformationException.class)
-  protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(
+  protected ResponseEntity<ErrorResponseDTO> handleMethodArgumentNotValid(
       StatusInformationException ex, WebRequest request) {
     return ResponseEntity.status(ex.getStatusCode()).body(ex.getErrorResponse());
   }

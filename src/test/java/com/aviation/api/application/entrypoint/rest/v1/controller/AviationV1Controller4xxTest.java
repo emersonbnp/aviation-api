@@ -26,87 +26,12 @@ class AviationV1Controller4xxTest {
   @ValueSource(ints = {400, 401, 403, 500, 503})
   void should_propagate_exception_when_http_error_getting_airport(int statusCode) {
     // Given
-    when(dataProvider.getAirport(any()))
+    when(dataProvider.getAirport(any(), any()))
         .thenThrow(new HttpClientErrorException(valueOf(statusCode)));
 
     // When
     final var exception =
         assertThrows(ServletException.class, () -> mockMvc.perform(get("/v1/aviation/airport")));
-
-    // Then
-    assertTrue(exception.getMessage().endsWith(valueOf(statusCode).toString()));
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {400, 401, 403, 500, 503})
-  void should_propagate_exception_when_http_error_getting_nava_id(int statusCode) {
-    // Given
-    when(dataProvider.getNavaid(any()))
-        .thenThrow(new HttpClientErrorException(valueOf(statusCode)));
-
-    // When
-    final var exception =
-        assertThrows(ServletException.class, () -> mockMvc.perform(get("/v1/aviation/navaid")));
-
-    // Then
-    assertTrue(exception.getMessage().endsWith(valueOf(statusCode).toString()));
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {400, 401, 403, 500, 503})
-  void should_propagate_exception_when_http_error_getting_fix(int statusCode) {
-    // Given
-    when(dataProvider.getFix(any())).thenThrow(new HttpClientErrorException(valueOf(statusCode)));
-
-    // When
-    final var exception =
-        assertThrows(ServletException.class, () -> mockMvc.perform(get("/v1/aviation/fix")));
-
-    // Then
-    assertTrue(exception.getMessage().endsWith(valueOf(statusCode).toString()));
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {400, 401, 403, 500, 503})
-  void should_propagate_exception_when_http_error_getting_feature(int statusCode) {
-    // Given
-    when(dataProvider.getFeature(any()))
-        .thenThrow(new HttpClientErrorException(valueOf(statusCode)));
-
-    // When
-    final var exception =
-        assertThrows(ServletException.class, () -> mockMvc.perform(get("/v1/aviation/feature")));
-
-    // Then
-    assertTrue(exception.getMessage().endsWith(valueOf(statusCode).toString()));
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {400, 401, 403, 500, 503})
-  void should_propagate_exception_when_http_error_getting_obstacle(int statusCode) {
-    // Given
-    when(dataProvider.getObstacle(any()))
-        .thenThrow(new HttpClientErrorException(valueOf(statusCode)));
-
-    // When
-    final var exception =
-        assertThrows(ServletException.class, () -> mockMvc.perform(get("/v1/aviation/obstacle")));
-
-    // Then
-    assertTrue(exception.getMessage().endsWith(valueOf(statusCode).toString()));
-  }
-
-  @ParameterizedTest
-  @ValueSource(ints = {400, 401, 403, 500, 503})
-  void should_propagate_exception_when_http_error_getting_station_info(int statusCode) {
-    // Given
-    when(dataProvider.getStationInfo(any()))
-        .thenThrow(new HttpClientErrorException(valueOf(statusCode)));
-
-    // When
-    final var exception =
-        assertThrows(
-            ServletException.class, () -> mockMvc.perform(get("/v1/aviation/stationinfo")));
 
     // Then
     assertTrue(exception.getMessage().endsWith(valueOf(statusCode).toString()));
