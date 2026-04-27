@@ -5,6 +5,86 @@ This API is a wrapper for ICAO API, providing endpoints to fetch navigational da
 The endpoints supported by aviation-api are available in the openapi.yaml file.
 The endpoints supported by aviation-api are documented in swagger.yaml, which can be accessed at `http://localhost:8080/swagger-ui.html` when the application is running. The API supports the following endpoints:
 
+## Running the Application
+
+### Prerequisites
+- Docker and Docker Compose installed
+
+### Quick Start with Docker Compose
+
+The simplest way to run the application is using Docker Compose, which orchestrates both the Spring Boot API and Redis cache:
+
+```bash
+# Navigate to project directory
+cd /Users/pessoal/IdeaProjects/aviation-api
+
+# Build and start all services
+docker compose up
+
+# The API will be available at: http://localhost:8080/swagger-ui.html
+```
+
+### Stopping the Application
+```bash
+# Stop all services
+docker compose down
+
+# Stop and remove volumes
+docker compose down -v
+```
+
+### Building Only the Docker Image
+
+If you prefer to build just the Docker image without starting services:
+
+```bash
+# Build the image
+docker build -t aviation-api:latest .
+
+# Run the container (requires Redis running separately)
+docker run -p 8080:8080 \
+  -e SPRING_DATA_REDIS_HOST=host.docker.internal \
+  -e SPRING_DATA_REDIS_PORT=6379 \
+  aviation-api:latest
+```
+
+### Local Development (without Docker)
+
+For local development, you can run the application directly:
+
+```bash
+# Build the project
+./gradlew build
+
+# Run the application
+./gradlew bootRun
+```
+
+Ensure Redis is running on `localhost:6379`.
+
+## Environment Variables
+
+The following environment variables can be configured:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `SPRING_DATA_REDIS_HOST` | localhost | Redis host |
+| `SPRING_DATA_REDIS_PORT` | 6379 | Redis port |
+| `LOGGING_LEVEL_COM_AVIATION_API` | DEBUG | Logging level |
+| `SPRING_PROFILES_ACTIVE` | prod | Spring profiles |
+
+## Rate Limiting Configuration
+
+The rate limiter is configured via `application.yaml`:
+
+```yaml
+aviation:
+  weather:
+    api:
+      rate-limit:
+        max-requests: 100      # Maximum requests allowed
+        window-seconds: 60     # Time window in seconds
+```
 
 ## Architecture
 The application is designed to scale and be resilient, while integrating with downstream services that require throttling.

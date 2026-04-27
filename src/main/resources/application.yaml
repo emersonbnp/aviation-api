@@ -17,7 +17,7 @@ aviation:
       base-url: https://aviationweather.gov/api/data
       max-attempts: 3
       initial-interval: 1000
-      multiplier: 2.0
+      multiplier: 1.5
       max-interval: 10000
-      max-requests: 3
+      max-requests: 80
       window-seconds: 60

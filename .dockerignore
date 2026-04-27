@@ -1,0 +1,33 @@
+# Build artifacts
+build/
+.gradle/
+*.jar
+*.war
+
+# Version control
+.git/
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+docs/
+*.md
+README.md
+
+# Local files
+local/
+compose.yaml
+Dockerfile
+.dockerignore
+
