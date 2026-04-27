@@ -71,7 +71,6 @@ The following environment variables can be configured:
 | `SPRING_DATA_REDIS_HOST` | localhost | Redis host |
 | `SPRING_DATA_REDIS_PORT` | 6379 | Redis port |
 | `LOGGING_LEVEL_COM_AVIATION_API` | DEBUG | Logging level |
-| `SPRING_PROFILES_ACTIVE` | prod | Spring profiles |
 
 ## Rate Limiting Configuration
 
@@ -81,13 +80,54 @@ The rate limiter is configured via `application.yaml`:
 aviation:
   weather:
     api:
-      rate-limit:
-        max-requests: 100      # Maximum requests allowed
-        window-seconds: 60     # Time window in seconds
+      max-requests: 80        # Maximum requests allowed
+      window-seconds: 60      # Time window in seconds
 ```
+
+## Retry Configuration
+
+The application implements exponential backoff retry logic for resilient API calls. Configure retries in `application.yaml`:
+
+```yaml
+aviation:
+  weather:
+    api:
+      max-attempts: 3           # Number of retry attempts (1 = no retries, default = 3)
+      initial-interval: 1000    # Initial backoff interval in milliseconds (default = 1000)
+      multiplier: 1.5           # Exponential backoff multiplier (default = 1.5)
+      max-interval: 10000       # Maximum backoff interval in milliseconds (default = 10000)
+```
+
+### Retry Behavior
+
+The retry mechanism uses **exponential backoff** to handle transient failures:
+
+1. **First attempt**: Immediate
+2. **Second attempt**: Wait `initial-interval` ms (1000ms default)
+3. **Third attempt**: Wait `initial-interval × multiplier` ms (1500ms default)
+4. **Subsequent attempts**: Backoff continues up to `max-interval` ms
+
+**Example with default settings:**
+- Attempt 1 (immediate) → fails
+- Attempt 2 (wait 1s) → fails
+- Attempt 3 (wait 1.5s) → succeeds ✓
+
+Retries are attempted for transient failures like:
+- Network timeouts
+- Temporary service unavailability
+- Connection resets
+
+Non-recoverable errors (e.g., 4xx HTTP status codes) are not retried.
 
 ## Architecture
 The application is designed to scale and be resilient, while integrating with downstream services that require throttling.
 In order to respect rate limits without impacting scalability, the application uses distributed cache.
 
 ![architecture.png](docs/images/architecture.png "Aviation API Architecture")
+
+## Further Improvements to Make it Production-Ready
+- Ensure only reasonable recoverable exceptions are retried
+- Improve code coverage including end-to-end tests validating retry and rate limiting behavior
+- Implement circuit breaker pattern for downstream service calls
+- Add monitoring and alerting for rate limit breaches and retry failures
+- Receive and propagate correlation IDs for better traceability across services
