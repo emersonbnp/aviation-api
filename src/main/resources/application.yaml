@@ -2,6 +2,11 @@ spring:
   application:
     name: aviation-api
 
+logging:
+  level:
+    root: INFO
+    com.aviation.api: DEBUG
+
 server:
   servlet:
     context-path: /api
