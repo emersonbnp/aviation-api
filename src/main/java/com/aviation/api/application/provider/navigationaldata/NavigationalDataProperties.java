@@ -4,4 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "aviation.weather.api")
 public record NavigationalDataProperties(
-    String baseUrl, int maxAttempts, long initialInterval, long maxInterval, double multiplier) {}
+    String baseUrl,
+    int maxAttempts,
+    long initialInterval,
+    long maxInterval,
+    double multiplier,
+    int maxRequests,
+    int windowSeconds) {}

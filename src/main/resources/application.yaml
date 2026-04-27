@@ -19,3 +19,5 @@ aviation:
       initial-interval: 1000
       multiplier: 2.0
       max-interval: 10000
+      max-requests: 3
+      window-seconds: 60
