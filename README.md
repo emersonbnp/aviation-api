@@ -98,27 +98,6 @@ aviation:
       max-interval: 10000       # Maximum backoff interval in milliseconds (default = 10000)
 ```
 
-### Retry Behavior
-
-The retry mechanism uses **exponential backoff** to handle transient failures:
-
-1. **First attempt**: Immediate
-2. **Second attempt**: Wait `initial-interval` ms (1000ms default)
-3. **Third attempt**: Wait `initial-interval × multiplier` ms (1500ms default)
-4. **Subsequent attempts**: Backoff continues up to `max-interval` ms
-
-**Example with default settings:**
-- Attempt 1 (immediate) → fails
-- Attempt 2 (wait 1s) → fails
-- Attempt 3 (wait 1.5s) → succeeds ✓
-
-Retries are attempted for transient failures like:
-- Network timeouts
-- Temporary service unavailability
-- Connection resets
-
-Non-recoverable errors (e.g., 4xx HTTP status codes) are not retried.
-
 ## Architecture
 The application is designed to scale and be resilient, while integrating with downstream services that require throttling.
 In order to respect rate limits without impacting scalability, the application uses distributed cache.
