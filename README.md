@@ -3,7 +3,7 @@ This API is a wrapper for ICAO API, providing endpoints to fetch navigational da
 
 ## API Specification
 The endpoints supported by aviation-api are available in the openapi.yaml file.
-The endpoints supported by aviation-api are documented in swagger.yaml, which can be accessed at `http://localhost:8080/swagger-ui.html` when the application is running. The API supports the following endpoints:
+The endpoints supported by aviation-api are documented in swagger.yaml, which can be accessed at `http://localhost:8080/api/swagger-ui.html` when the application is running. The API supports the following endpoints:
 
 ## Running the Application
 
@@ -21,7 +21,7 @@ cd /Users/pessoal/IdeaProjects/aviation-api
 # Build and start all services
 docker compose up
 
-# The API will be available at: http://localhost:8080/swagger-ui.html
+# The API will be available at: http://localhost:8080/api/swagger-ui.html
 ```
 
 ### Stopping the Application
